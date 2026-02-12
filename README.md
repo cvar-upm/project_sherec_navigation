@@ -43,7 +43,7 @@ Curently, only **scenario 1** is ready to go.
 
 ### Interactive Navigation
 
-> Work in progress...
+![Interactive Navigation](doc/imgs/nav.gif)
 
 ### Mission (python) navigation
 
