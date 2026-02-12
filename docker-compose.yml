@@ -1,0 +1,20 @@
+services:
+  aerostack2:
+    image: aerostack2_sherec_navigation:latest
+    build:
+      context: ./docker/
+      args:
+        AS2_BRANCH: main
+      dockerfile: Dockerfile
+    container_name: as2_sherec_nav
+    environment:
+      DISPLAY: $DISPLAY
+      ROS_LOCALHOST_ONLY: 1
+    privileged: true
+    volumes:
+      # X11
+      - ~/.Xauthority:/root/.Xauthority
+      # 
+      - .:/root/sherec_nav/
+    network_mode: "host"
+    command: tail -f /dev/null

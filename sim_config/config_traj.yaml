@@ -1,0 +1,36 @@
+/**:
+  ros__parameters:
+    use_sim_time: True
+  platform:
+    ros__parameters:
+      cmd_freq: 30.0  # Hz of platform commands send
+      info_freq: 10.0  # Hz of platform info publish
+      enable_takeoff_platform: false  # Enable takeoff platform, only for debugging purposes
+      enable_land_platform: false  # Enable land platform, only for debugging purposes
+      control_modes_file: sim_config/control_modes_traj.yaml
+  state_estimator:
+    ros__parameters:
+      plugin_name: ground_truth
+      use_gazebo_tf: True
+  controller_manager:
+    ros__parameters:
+      plugin_name: differential_flatness_controller
+      cmd_freq: 100.0  # Hz of platform commands send
+      info_freq: 10.0  # Hz of platform info publish
+      odom_frame_id: "odom"
+      base_frame_id: "base_link"
+      use_bypass: false
+      tf_timeout_threshold: 0.05  # seconds
+      plugin_config_file: sim_config/differential_flatness_controller.yaml # not working, passed in tmux
+  TakeoffBehavior:
+    ros__parameters:
+      takeoff_plugin_name: takeoff_plugin_trajectory
+  LandBehavior:
+    ros__parameters:
+      land_plugin_name: land_plugin_trajectory
+  GoToBehavior:
+    ros__parameters:
+      go_to_plugin_name: go_to_plugin_position
+  FollowPathBehavior:
+    ros__parameters:
+      follow_path_plugin_name: follow_path_plugin_position
