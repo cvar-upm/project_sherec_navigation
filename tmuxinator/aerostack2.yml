@@ -74,8 +74,8 @@ windows:
         root: ./mission/
         layout:
         panes:
-            # - python mission_path_planner_test.py
-            - python mission_click_to_navigate.py
+            # - python3 mission_path_planner_test.py
+            - python3 mission_click_to_navigate.py
             - ros2 launch as2_visualization as2_visualization.launch.py
                 namespace:=drone0 
                 rviz_config:=../rviz/config.rviz

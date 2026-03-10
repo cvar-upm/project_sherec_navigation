@@ -46,13 +46,13 @@ launch_keyboard_teleop=${launch_keyboard_teleop:="false"}
 # CHOOSE SIMULATION CONFIG FILE
 echo "Choose simulation config file to open:"
 cat -n <(ls -v -1 sim_config/*.json) # list json files
-simulation_config=$(python utils/choose_sim_config.py | tail -n 1)
+simulation_config=$(python3 utils/choose_sim_config.py | tail -n 1)
 if [[ ${simulation_config} == "Invalid" ]]; then
     exit 1
 fi
 
 # Get drone namespaces from swarm config file
-drones=$(python utils/get_drones.py ${simulation_config})
+drones=$(python3 utils/get_drones.py ${simulation_config})
 
 drones_arr=(${drones//:/ })
 for drone in "${drones_arr[@]}"
@@ -71,7 +71,7 @@ fi
 
 if [[ ${launch_keyboard_teleop} == "true" ]]; then
     # TODO: Keyboard Teleop uses ',' as separator for drone namespaces
-    drones_sep=$(python utils/get_drones.py ${simulation_config} --sep ",")
+    drones_sep=$(python3 utils/get_drones.py ${simulation_config} --sep ",")
     tmuxinator start -n keyboard_teleop -p tmuxinator/keyboard_teleop.yml \
         simulation=true \
         drone_namespace=${drones_sep} &
