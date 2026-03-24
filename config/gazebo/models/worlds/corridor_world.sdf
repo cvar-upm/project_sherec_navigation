@@ -1,0 +1,216 @@
+<?xml version="1.0" ?>
+<sdf version='1.9'>
+  <world name='corridor_world'>
+
+    <!-- Physics -->
+    <physics name='1ms' type='ignored'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+
+    <!-- Core systems -->
+    <plugin name='ignition::gazebo::systems::Physics' filename='ignition-gazebo-physics-system'/>
+    <plugin name='ignition::gazebo::systems::SceneBroadcaster' filename='ignition-gazebo-scene-broadcaster-system'/>
+    <plugin name='ignition::gazebo::systems::UserCommands' filename='ignition-gazebo-user-commands-system'/>
+    <plugin name='ignition::gazebo::systems::Sensors' filename='ignition-gazebo-sensors-system'>
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <!-- Environment -->
+    <gravity>0 0 -9.81</gravity>
+
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>true</shadows>
+    </scene>
+
+    <!-- Ground -->
+    <model name='ground_plane'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>25 25</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>25 25</size>
+            </plane>
+          </geometry>
+          <material>
+              <ambient>0.7 0.7 0.7 1</ambient> 
+              <diffuse>0.7 0.7 0.7 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- L corridor walls (2 legs x 10 m) -->
+    <model name='wall_bottom_h'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>13 0.1 2</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>13 0.1 2</size>
+            </box>
+          </geometry>
+          <material>
+              <ambient>0.7 0.7 0.7 1</ambient>
+              <diffuse>0.7 0.7 0.7 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      <pose>1.5 -2 1 0 0 0</pose>
+    </model>
+
+    <model name='wall_top_h'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>9 0.1 2</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>9 0.1 2</size>
+            </box>
+          </geometry>
+          <material>
+              <ambient>0.7 0.7 0.7 1</ambient>
+              <diffuse>0.7 0.7 0.7 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      <pose>-0.5 2 1 0 0 0</pose>
+    </model>
+
+    <model name='wall_left_cap'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>4 0.1 2</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>4 0.1 2</size>
+            </box>
+          </geometry>
+          <material>
+              <ambient>0.7 0.7 0.7 1</ambient>
+              <diffuse>0.7 0.7 0.7 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      <pose>-5 0 1 0 0 1.5708</pose>
+    </model>
+
+    <model name='wall_outer_v'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>13 0.1 2</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>13 0.1 2</size>
+            </box>
+          </geometry>
+          <material>
+              <ambient>0.7 0.7 0.7 1</ambient>
+              <diffuse>0.7 0.7 0.7 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      <pose>8 4.5 1 0 0 1.5708</pose>
+    </model>
+
+    <model name='wall_inner_v'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>9 0.1 2</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>9 0.1 2</size>
+            </box>
+          </geometry>
+          <material>
+              <ambient>0.7 0.7 0.7 1</ambient>
+              <diffuse>0.7 0.7 0.7 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      <pose>4 6.5 1 0 0 1.5708</pose>
+    </model>
+
+    <model name='wall_top_cap'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>4 0.1 2</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>4 0.1 2</size>
+            </box>
+          </geometry>
+          <material>
+              <ambient>0.7 0.7 0.7 1</ambient>
+              <diffuse>0.7 0.7 0.7 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      <pose>6 11 1 0 0 0</pose>
+    </model>
+
+    <!-- Light -->
+    <light name='sun' type='directional'>
+      <pose>0 0 10 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <intensity>1.0</intensity>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+  </world>
+</sdf>

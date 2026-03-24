@@ -2,9 +2,13 @@
 
 usage() {
     echo "  options:"
-    echo "      -r: record rosbag"
-    echo "      -t: launch keyboard teleoperation"
+  echo "      -r: record rosbag (ground_station)"
+  echo "      -t: launch keyboard teleoperation (ground_station)"
 }
+
+## DEFAULTS
+record_rosbag="false"
+launch_keyboard_teleop="false"
 
 # Arg parser
 while getopts "rt" opt; do
@@ -30,56 +34,21 @@ while getopts "rt" opt; do
   esac
 done
 
-# Shift optional args
-shift $((OPTIND -1))
-
 # HOW TO INCLUDE WORLDS OR MODELS FROM THE PROJECT
-export IGN_GAZEBO_RESOURCE_PATH=$PWD/worlds:$IGN_GAZEBO_RESOURCE_PATH
-export GZ_SIM_RESOURCE_PATH=$PWD/worlds:$GZ_SIM_RESOURCE_PATH
-export GZ_SIM_RESOURCE_PATH=$PWD/models:$GZ_SIM_RESOURCE_PATH
+export IGN_GAZEBO_RESOURCE_PATH=$PWD/config/gazebo/models/worlds:$IGN_GAZEBO_RESOURCE_PATH
+export GZ_SIM_RESOURCE_PATH=$PWD/config/gazebo/models/worlds:$GZ_SIM_RESOURCE_PATH
+export GZ_SIM_RESOURCE_PATH=$PWD/config/gazebo/models/models:$GZ_SIM_RESOURCE_PATH
 
+# if [[ ${record_rosbag} == "true" || ${launch_keyboard_teleop} == "true" ]]; then
+#   tmuxinator start -n ground_station -p tmuxinator/ground_station.yaml \
+#     launch_keyboard_teleop=${launch_keyboard_teleop} \
+#     record_rosbag=${record_rosbag}
+#   wait
+# fi
 
-## DEFAULTS
-record_rosbag=${record_rosbag:="false"}
-launch_keyboard_teleop=${launch_keyboard_teleop:="false"}
-
-# CHOOSE SIMULATION CONFIG FILE
-echo "Choose simulation config file to open:"
-cat -n <(ls -v -1 sim_config/*.json) # list json files
-simulation_config=$(python3 utils/choose_sim_config.py | tail -n 1)
-if [[ ${simulation_config} == "Invalid" ]]; then
-    exit 1
-fi
-
-# Get drone namespaces from swarm config file
-drones=$(python3 utils/get_drones.py ${simulation_config})
-
-drones_arr=(${drones//:/ })
-for drone in "${drones_arr[@]}"
-do
-    tmuxinator start -p tmuxinator/aerostack2.yml \
-        drone_namespace=${drone} \
-        simulation_config=${simulation_config} &
-    wait
-done
-
-if [[ ${record_rosbag} == "true" ]]; then
-    tmuxinator start -p tmuxinator/rosbag.yml \
-        drones=${drones} &
-    wait
-fi
-
-if [[ ${launch_keyboard_teleop} == "true" ]]; then
-    # TODO: Keyboard Teleop uses ',' as separator for drone namespaces
-    drones_sep=$(python3 utils/get_drones.py ${simulation_config} --sep ",")
-    tmuxinator start -n keyboard_teleop -p tmuxinator/keyboard_teleop.yml \
-        simulation=true \
-        drone_namespace=${drones_sep} &
-    wait
-fi
-
-tmuxinator start -p tmuxinator/gazebo.yml simulation_config=${simulation_config} &
+tmuxinator start -n drone -p tmuxinator/aerostack2.yml \
+    drone_namespace=${drone}
 wait
 
-# Attach to tmux session ${drone_arr[@]}, window mission
-tmux attach-session -t ${drones_arr[0]}:mission
+
+# ros2 launch as2_gazebo_assets launch_simulation.py use_sim_time:=true simulation_config_file:=config/gazebo/world.yaml

@@ -1,0 +1,25 @@
+<%
+# Input parameters
+launch_keyboard_teleop = @settings["launch_keyboard_teleop"] == "true"
+record_rosbag = @settings["record_rosbag"] == "true"
+%>
+
+name: ground_station
+attach: true
+root: ./
+on_project_start: mkdir rosbags 2>/dev/null
+windows:
+  # Ground station
+  - ground_station:
+      layout:
+      panes:
+    <%- if launch_keyboard_teleop %>
+        - ros2 launch as2_keyboard_teleoperation as2_keyboard_teleoperation_launch.py
+          namespace:=drone0
+          use_sim_time:=true
+    <%- end %>
+
+    <%- if record_rosbag %>
+      # ROSbag recording
+          - ./record_rosbag.bash config/rosbag_topics.yaml
+    <%- end %>

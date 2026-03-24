@@ -41,7 +41,7 @@ def drone_run(drone_interface: Drone):
 
     ##### NAVIGATE TO #####
     print("Navigate to")
-    drone_interface.navigate_to(2.0, -5.0, 2.0, speed=1.0)
+    drone_interface.navigate_to(3.0, 0.0, 1.0, speed=1.0)
     # uav.navigate_to(5.0, 5.0, 2.0, speed=1.0, wait=False)
     # sleep(3)
     # uav.navigate_to.pause()

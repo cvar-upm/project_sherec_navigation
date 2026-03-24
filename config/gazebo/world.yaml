@@ -1,0 +1,30 @@
+world_name: "corridor_world"
+drones:
+  - model_type: "f330"
+    model_name: "drone0"
+    flight_time: 60
+    xyz:
+      - 0.0
+      - 0.0
+      - 0.3
+    payload:
+      - model_type: "lidar_3d"
+        model_name: "lidar"
+        xyz:
+        - 0.0
+        - 0.0
+        - 0.2
+        rpy:
+        - 0.0
+        - 0.0
+        - 0.0
+      # - model_type: "rgbd_camera"
+      #   model_name: "rgbd_camera"
+      #   xyz:
+      #   - 0.1
+      #   - 0.0
+      #   - 0.1
+      #   rpy:
+      #   - 0.0
+      #   - 0.28
+      #   - 0.0
