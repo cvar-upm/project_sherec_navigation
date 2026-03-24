@@ -41,23 +41,17 @@ def drone_run(drone_interface: Drone):
 
     ##### NAVIGATE TO #####
     print("Navigate to")
-    drone_interface.navigate_to(3.0, 0.0, 1.0, speed=1.0)
-    # uav.navigate_to(5.0, 5.0, 2.0, speed=1.0, wait=False)
-    # sleep(3)
-    # uav.navigate_to.pause()
-    # sleep(3)
-    # uav.navigate_to.resume(wait_result=False)
-    # sleep(3)
-    # uav.navigate_to.stop()
-    print("Navigate to done")
+    drone_interface.navigate_to(6.0, 0.0, 1.0, speed=1.0)
     sleep(5)
+    drone_interface.navigate_to(6.0, 8.0, 1.0, speed=1.0)
+    print("Navigate to done")
 
     ##### LAND #####
-    print("Landing")
-    drone_interface.land(speed=0.5)
-    print("Land done")
+    # print("Landing")
+    # drone_interface.land(speed=0.5)
+    # print("Land done")
 
-    drone_interface.disarm()
+    # drone_interface.disarm()
 
 
 if __name__ == '__main__':
